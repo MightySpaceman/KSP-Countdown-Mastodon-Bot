@@ -30,6 +30,8 @@ def post():
     )
 
     mastodon.status_post(content) 
+    
+mastodon.status_post(content) 
 
 while True:
     if (datetime.now().hour == 7) and (datetime.now().minute == 10) and (datetime.now().second == 10):
