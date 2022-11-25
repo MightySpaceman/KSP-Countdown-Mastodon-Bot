@@ -17,21 +17,31 @@ def post():
     delta = relativedelta.relativedelta(end_date, start_date)
 
     delta2 = start_date - end_date
-
-    content = 'TESTING AUTO-RUN CAPABILITY\n\n'
+    
+    content = '(Functionality test)\n\n'
     content += 'Time until KSP 2 release:\n'
     content += f'{delta.months} months, {delta.days} days'
     content += f'\n\nT{delta2.days} DAYS'
 
     #   Set up Mastodon
     mastodon = Mastodon(
-        access_token = '[Bot Access Key]', # Your Mastodon bot access key
+        access_token = 'ng1xe9-rf25zYLyqg2XcoSeWZx7uuAjpfn9g-gI9Pf4', # Your Mastodon bot access key
         api_base_url = 'https://mstdn.social/' # Base URL of Mastodon instance of choice
     )
 
     mastodon.status_post(content) 
 
 while True:
-    if (datetime.now().hour == 7) and (datetime.now().minute == 10):
-        post()
-        time.sleep(1000)
+    if (datetime.now().hour == 7) and (datetime.now().minute == 10) and (datetime.now().second == 10):
+        try:
+            post()
+            print("\nSuccesfully posted at ", datetime.now())
+        except Exception as error:
+            print("\nError encountered at ")
+            print(f"\nↆ ERROR LISTED BELOW ↆ \n{error}")
+            
+            f = open("error", "w")
+            f.write(error)
+            f.close
+
+        time.sleep(10000)
