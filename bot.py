@@ -1,3 +1,4 @@
+import schedule
 import time
 import datetime
 from datetime import datetime
@@ -31,17 +32,15 @@ def post():
 
     mastodon.status_post(content) 
 
-while True:
-    if (datetime.now().hour == 7) and (datetime.now().minute == 10) and (datetime.now().second == 10):
-        try:
-            post()
-            print("\nSuccesfully posted at ", datetime.now())
-        except Exception as error:
-            print("\nError encountered at ")
-            print(f"\nↆ ERROR LISTED BELOW ↆ \n{error}")
-            
-            f = open("error", "w")
-            f.write(error)
-            f.close
 
-        time.sleep(10000)
+def job():
+    print("Job run at:", time.ctime())
+
+# Schedule the function to run at a specific time every day
+schedule.every().day.at("7:10").do(post)
+
+# Start the scheduler
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+
